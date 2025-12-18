@@ -160,26 +160,26 @@
 - **Phase:** Database & Schema Design
 - **Goal:** Set up a new Supabase project and obtain the URL and API keys.
 - **Prerequisites:**
-  - [ ] Supabase account created (free tier is fine)
-  - [ ] Step 4 completed
+  - [x] Supabase account created (free tier is fine)
+  - [x] Step 4 completed
 - **What to do:**
-  - [ ] Go to [supabase.com](https://supabase.com) and create a new project
-  - [ ] Name it "innercompass-mini" (or similar)
-  - [ ] Choose a region close to you
-  - [ ] Wait for the project to initialize (~2 minutes)
-  - [ ] Copy the following from Project Settings > API:
+  - [x] Go to [supabase.com](https://supabase.com) and create a new project
+  - [x] Name it "innercompass-mini" (or similar)
+  - [x] Choose a region close to you
+  - [x] Wait for the project to initialize (~2 minutes)
+  - [x] Copy the following from Project Settings > API:
     - Project URL → `NEXT_PUBLIC_SUPABASE_URL`
     - `anon` `public` key → `NEXT_PUBLIC_SUPABASE_ANON_KEY`
     - `service_role` key → `SUPABASE_SERVICE_ROLE_KEY` (keep this secret!)
-  - [ ] Paste these values into `.env.local`
+  - [x] Paste these values into `.env.local`
 - **Implementation hints:**
   - The `anon` key is safe to expose in the browser; it respects RLS policies
   - The `service_role` key bypasses RLS—never expose it to the client
   - Keep the Supabase dashboard open; you'll use the SQL Editor next
 - **Done when:**
-  - [ ] Supabase project is live
-  - [ ] All three Supabase env vars populated in `.env.local`
-  - [ ] You can access the Supabase dashboard
+  - [x] Supabase project is live
+  - [x] All three Supabase env vars populated in `.env.local`
+  - [x] You can access the Supabase dashboard
 
 ---
 
@@ -188,14 +188,14 @@
 - **Phase:** Database & Schema Design
 - **Goal:** Set up a Supabase client for server-side and client-side use.
 - **Prerequisites:**
-  - [ ] Step 5 completed
-  - [ ] `@supabase/supabase-js` installed: `npm install @supabase/supabase-js`
+  - [x] Step 5 completed
+  - [x] `@supabase/supabase-js` installed: `npm install @supabase/supabase-js`
 - **What to do:**
-  - [ ] Install Supabase JS SDK: `npm install @supabase/supabase-js`
-  - [ ] Create `lib/supabaseClient.ts`:
+  - [x] Install Supabase JS SDK: `npm install @supabase/supabase-js`
+  - [x] Create `lib/supabaseClient.ts`:
     - Export `supabase` (browser client using anon key)
     - Export `supabaseAdmin` (server-only client using service role key)
-  - [ ] Import and validate env vars from `lib/env.ts`
+  - [x] Import and validate env vars from `lib/env.ts`
 - **Implementation hints:**
   - Browser client example:
     ```typescript
@@ -205,9 +205,9 @@
   - Server/admin client uses `SUPABASE_SERVICE_ROLE_KEY` instead of anon key
   - Use the admin client only in API routes or server components where you need to bypass RLS
 - **Done when:**
-  - [ ] `lib/supabaseClient.ts` exports both clients
-  - [ ] No errors when importing in a test file
-  - [ ] App still runs without crashing
+  - [x] `lib/supabaseClient.ts` exports both clients
+  - [x] No errors when importing in a test file
+  - [x] App still runs without crashing
 
 ---
 
@@ -216,9 +216,9 @@
 - **Phase:** Database & Schema Design
 - **Goal:** Define the tables and columns needed for journal entries and reflection outputs.
 - **Prerequisites:**
-  - [ ] Step 6 completed
+  - [x] Step 6 completed
 - **What to do:**
-  - [ ] Document the schema in a file `docs/schema.sql` (or in README):
+  - [x] Document the schema in a file `docs/schema.sql` (or in README):
     ```sql
     -- Table: journal_entries
     CREATE TABLE journal_entries (
@@ -237,7 +237,7 @@
       created_at TIMESTAMPTZ DEFAULT now()
     );
     ```
-  - [ ] Add indexes:
+  - [x] Add indexes:
     ```sql
     CREATE INDEX idx_journal_entries_user_id ON journal_entries(user_id);
     CREATE INDEX idx_journal_outputs_entry_id ON journal_outputs(entry_id);
@@ -249,9 +249,9 @@
   - `output` stores the validated JSON reflection as a JSONB column
   - Use `UUID` for primary keys; Supabase generates them automatically
 - **Done when:**
-  - [ ] Schema is documented and reviewed
-  - [ ] You understand which columns will store what data
-  - [ ] Ready to run this SQL in Supabase
+  - [x] Schema is documented and reviewed
+  - [x] You understand which columns will store what data
+  - [x] Ready to run this SQL in Supabase
 
 ---
 
@@ -260,21 +260,21 @@
 - **Phase:** Database & Schema Design
 - **Goal:** Execute the SQL to create tables and indexes in the Supabase SQL Editor.
 - **Prerequisites:**
-  - [ ] Step 7 completed
+  - [x] Step 7 completed
 - **What to do:**
-  - [ ] Open Supabase Dashboard → SQL Editor
-  - [ ] Copy the SQL from Step 7 into a new query
-  - [ ] Run the query
-  - [ ] Verify tables appear in Table Editor
-  - [ ] Verify indexes appear under each table
+  - [x] Open Supabase Dashboard → SQL Editor
+  - [x] Copy the SQL from Step 7 into a new query
+  - [x] Run the query
+  - [x] Verify tables appear in Table Editor
+  - [x] Verify indexes appear under each table
 - **Implementation hints:**
   - If you get errors, check that `auth.users` is available (it's a built-in Supabase table)
   - Use the Table Editor to visually inspect the schema
   - You can add sample data manually to test later
 - **Done when:**
-  - [ ] `journal_entries` table exists with columns: `id`, `user_id`, `entry_text`, `created_at`
-  - [ ] `journal_outputs` table exists with columns: `id`, `entry_id`, `user_id`, `output`, `created_at`
-  - [ ] Indexes created successfully
+  - [x] `journal_entries` table exists with columns: `id`, `user_id`, `entry_text`, `created_at`
+  - [x] `journal_outputs` table exists with columns: `id`, `entry_id`, `user_id`, `output`, `created_at`
+  - [x] Indexes created successfully
 
 ---
 
@@ -283,14 +283,14 @@
 - **Phase:** Database & Schema Design
 - **Goal:** Enable RLS on both tables and create policies so users can only access their own data.
 - **Prerequisites:**
-  - [ ] Step 8 completed
+  - [x] Step 8 completed
 - **What to do:**
-  - [ ] In SQL Editor, enable RLS:
+  - [x] In SQL Editor, enable RLS:
     ```sql
     ALTER TABLE journal_entries ENABLE ROW LEVEL SECURITY;
     ALTER TABLE journal_outputs ENABLE ROW LEVEL SECURITY;
     ```
-  - [ ] Create policies for `journal_entries`:
+  - [x] Create policies for `journal_entries`:
     ```sql
     -- Users can insert their own entries
     CREATE POLICY "Users can insert own entries"
@@ -302,7 +302,7 @@
       ON journal_entries FOR SELECT
       USING (auth.uid() = user_id);
     ```
-  - [ ] Create similar policies for `journal_outputs`:
+  - [x] Create similar policies for `journal_outputs`:
     ```sql
     CREATE POLICY "Users can insert own outputs"
       ON journal_outputs FOR INSERT
@@ -312,16 +312,16 @@
       ON journal_outputs FOR SELECT
       USING (auth.uid() = user_id);
     ```
-  - [ ] Run these queries in SQL Editor
+  - [x] Run these queries in SQL Editor
 - **Implementation hints:**
   - RLS policies are enforced when using the `anon` key
   - `auth.uid()` returns the current authenticated user's ID
   - With these policies, users cannot read or write other users' data
   - Service role key bypasses RLS—use it only in trusted server code
 - **Done when:**
-  - [ ] RLS enabled on both tables
-  - [ ] Policies created and visible in Supabase Dashboard > Authentication > Policies
-  - [ ] You've confirmed (mentally or in docs) that users can only access their own rows
+  - [x] RLS enabled on both tables
+  - [x] Policies created and visible in Supabase Dashboard > Authentication > Policies
+  - [x] You've confirmed (mentally or in docs) that users can only access their own rows
 
 ---
 
@@ -330,20 +330,20 @@
 - **Phase:** Authentication & Authorization
 - **Goal:** Build login and signup page UIs with forms; no backend logic yet.
 - **Prerequisites:**
-  - [ ] Step 9 completed
-  - [ ] shadcn/ui components installed (button, input, card)
+  - [x] Step 9 completed
+  - [x] shadcn/ui components installed (button, input, card)
 - **What to do:**
-  - [ ] Install input component: `npx shadcn@latest add input label`
-  - [ ] Create `app/(auth)/login/page.tsx`:
+  - [x] Install input component: `npx shadcn@latest add input label`
+  - [x] Create `app/(auth)/login/page.tsx`:
     - Form with email and password fields
     - "Login" button
     - Link to signup page
-  - [ ] Create `app/(auth)/signup/page.tsx`:
+  - [x] Create `app/(auth)/signup/page.tsx`:
     - Form with email and password fields
     - "Sign Up" button
     - Link to login page
-  - [ ] Style both pages using shadcn `Card`, `Label`, `Input`, `Button`
-  - [ ] Add basic client-side validation (required fields)
+  - [x] Style both pages using shadcn `Card`, `Label`, `Input`, `Button`
+  - [x] Add basic client-side validation (required fields)
 - **Implementation hints:**
   - Use `<form>` with `onSubmit` handlers (preventDefault for now)
   - Center the form card on the page using Flexbox or Grid
@@ -362,9 +362,9 @@
     </Card>
     ```
 - **Done when:**
-  - [ ] `/login` and `/signup` pages render clean forms
-  - [ ] Forms are styled and responsive
-  - [ ] No functionality yet, but UI is ready for auth logic
+  - [x] `/login` and `/signup` pages render clean forms
+  - [x] Forms are styled and responsive
+  - [x] No functionality yet, but UI is ready for auth logic
 
 ---
 
@@ -373,20 +373,20 @@
 - **Phase:** Authentication & Authorization
 - **Goal:** Wire up login and signup forms to Supabase Auth; handle success and error states.
 - **Prerequisites:**
-  - [ ] Step 10 completed
-  - [ ] `@supabase/auth-helpers-nextjs` installed: `npm install @supabase/auth-helpers-nextjs`
+  - [x] Step 10 completed
+  - [x] `@supabase/auth-helpers-nextjs` installed: `npm install @supabase/auth-helpers-nextjs`
 - **What to do:**
-  - [ ] Install Supabase Auth Helpers: `npm install @supabase/auth-helpers-nextjs`
-  - [ ] In `app/(auth)/signup/page.tsx`:
+  - [x] Install Supabase Auth Helpers: `npm install @supabase/auth-helpers-nextjs`
+  - [x] In `app/(auth)/signup/page.tsx`:
     - Import `supabase` from `lib/supabaseClient`
     - On form submit, call `supabase.auth.signUp({ email, password })`
     - On success, redirect to `/new`
     - On error, show error message in UI (toast or banner)
-  - [ ] In `app/(auth)/login/page.tsx`:
+  - [x] In `app/(auth)/login/page.tsx`:
     - Call `supabase.auth.signInWithPassword({ email, password })`
     - On success, redirect to `/new`
     - On error, show error message
-  - [ ] Test both flows manually
+  - [x] Test both flows manually
 - **Implementation hints:**
   - Use `useRouter` from `next/navigation` to programmatically redirect
   - Example:
@@ -399,32 +399,32 @@
   - You can use `useState` to manage error messages
   - For better UX, add a loading spinner during auth calls (disable button, show skeleton)
 - **Done when:**
-  - [ ] Signing up with a new email creates a user in Supabase (check Auth > Users in dashboard)
-  - [ ] Logging in with valid credentials redirects to `/new`
-  - [ ] Invalid credentials show an error message
-  - [ ] No console errors
+  - [x] Signing up with a new email creates a user in Supabase (check Auth > Users in dashboard)
+  - [x] Logging in with valid credentials redirects to `/new`
+  - [x] Invalid credentials show an error message
+  - [x] No console errors
 
 ---
 
-### Step 12: Implement Session Management & Protected Routes
+### Step 12: Implement Session Management & Protected Routes ✅
 
 - **Phase:** Authentication & Authorization
 - **Goal:** Redirect unauthenticated users from `/new`, `/result`, `/history` to `/login`; show logout button in authenticated layout.
 - **Prerequisites:**
-  - [ ] Step 11 completed
+  - [x] Step 11 completed
 - **What to do:**
-  - [ ] Create `lib/auth.ts` with a helper to get the current session:
+  - [x] Create `lib/auth.ts` with a helper to get the current session:
     ```typescript
     export async function getCurrentUser() {
       const { data: { session } } = await supabase.auth.getSession()
       return session?.user ?? null
     }
     ```
-  - [ ] In `app/(app)/layout.tsx`:
+  - [x] In `app/(app)/layout.tsx`:
     - Call `getCurrentUser()` (server component)
     - If no user, redirect to `/login` using `redirect()` from `next/navigation`
     - If user exists, render children and show a logout button in the header
-  - [ ] Create a logout button component that calls `supabase.auth.signOut()` and redirects to `/login`
+  - [x] Create a logout button component that calls `supabase.auth.signOut()` and redirects to `/login`
 - **Implementation hints:**
   - `app/(app)/layout.tsx` is a server component by default; you can call Supabase directly
   - Use `redirect('/login')` from `next/navigation` to redirect server-side
@@ -437,24 +437,24 @@
     }
     ```
 - **Done when:**
-  - [ ] Visiting `/new` without being logged in redirects to `/login`
-  - [ ] Logging in allows access to `/new`
-  - [ ] Logout button appears in authenticated layout and works
-  - [ ] After logout, user is redirected to `/login`
+  - [x] Visiting `/new` without being logged in redirects to `/login`
+  - [x] Logging in allows access to `/new`
+  - [x] Logout button appears in authenticated layout and works
+  - [x] After logout, user is redirected to `/login`
 
 ---
 
-### Step 13: Define Reflection JSON Schema with Zod
+### Step 13: Define Reflection JSON Schema with Zod ✅
 
 - **Phase:** LLM Integration & API Layer
 - **Goal:** Create a Zod schema that defines the exact structure of the reflection JSON returned by the LLM.
 - **Prerequisites:**
-  - [ ] Step 12 completed
-  - [ ] `zod` installed: `npm install zod`
+  - [x] Step 12 completed
+  - [x] `zod` installed: `npm install zod`
 - **What to do:**
-  - [ ] Install Zod: `npm install zod`
-  - [ ] Create `lib/schemas.ts`
-  - [ ] Define `ReflectionSchema` using Zod with the following fields:
+  - [x] Install Zod: `npm install zod`
+  - [x] Create `lib/schemas.ts`
+  - [x] Define `ReflectionSchema` using Zod with the following fields:
     ```typescript
     import { z } from 'zod'
 
@@ -474,35 +474,35 @@
 
     export type Reflection = z.infer<typeof ReflectionSchema>
     ```
-  - [ ] Create a sample JSON fixture that matches this schema and validate it manually to ensure the schema works
+  - [x] Create a sample JSON fixture that matches this schema and validate it manually to ensure the schema works
 - **Implementation hints:**
   - This schema is the single source of truth for both LLM prompt instructions and validation
   - Use `.min()` and `.max()` to enforce length constraints
   - `z.infer` automatically generates a TypeScript type from the schema
   - Test the schema by calling `ReflectionSchema.parse(sampleData)` in a test file or Node REPL
 - **Done when:**
-  - [ ] `ReflectionSchema` defined in `lib/schemas.ts`
-  - [ ] `Reflection` TypeScript type exported
-  - [ ] A sample JSON object successfully parses without errors
+  - [x] `ReflectionSchema` defined in `lib/schemas.ts`
+  - [x] `Reflection` TypeScript type exported
+  - [x] A sample JSON object successfully parses without errors
 
 ---
 
-### Step 14: Create `/api/generate` Endpoint (Stub)
+### Step 14: Create `/api/generate` Endpoint (Stub) ✅
 
 - **Phase:** LLM Integration & API Layer
 - **Goal:** Set up the API route structure; return a hardcoded valid reflection JSON for now (no LLM call yet).
 - **Prerequisites:**
-  - [ ] Step 13 completed
+  - [x] Step 13 completed
 - **What to do:**
-  - [ ] Create `app/api/generate/route.ts`
-  - [ ] Implement a `POST` handler:
+  - [x] Create `app/api/generate/route.ts`
+  - [x] Implement a `POST` handler:
     - Accept JSON body: `{ entry_text: string }`
     - Validate that `entry_text` is non-empty and under 5000 characters
     - Return a hardcoded `Reflection` object (copy from your sample fixture)
-  - [ ] Add basic error handling:
+  - [x] Add basic error handling:
     - Return 400 if `entry_text` is missing or too long
     - Return 401 if user is not authenticated (check session using `supabase.auth.getSession()`)
-  - [ ] Test with curl or Postman:
+  - [x] Test with curl or Postman:
     ```bash
     curl -X POST http://localhost:3000/api/generate \
       -H "Content-Type: application/json" \
@@ -519,10 +519,10 @@
     }
     ```
 - **Done when:**
-  - [ ] `POST /api/generate` returns 200 with hardcoded reflection JSON
-  - [ ] Returns 401 if not authenticated
-  - [ ] Returns 400 if input is invalid
-  - [ ] No crashes or TypeScript errors
+  - [x] `POST /api/generate` returns 200 with hardcoded reflection JSON
+  - [x] Returns 401 if not authenticated
+  - [x] Returns 400 if input is invalid
+  - [x] No crashes or TypeScript errors
 
 ---
 

@@ -1,7 +1,12 @@
-export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <h1 className="text-4xl font-bold">InnerCompass Mini</h1>
-    </main>
-  );
+import { redirect } from "next/navigation";
+import { getCurrentUser } from "@/lib/auth";
+
+export default async function Home() {
+  const user = await getCurrentUser();
+
+  if (user) {
+    redirect("/new");
+  } else {
+    redirect("/login");
+  }
 }
