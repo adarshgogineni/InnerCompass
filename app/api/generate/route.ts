@@ -1,14 +1,15 @@
 import { NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabaseClient';
+import { createClient } from '@/lib/supabaseServer';
 import { supabaseAdmin } from '@/lib/supabaseAdmin';
-import { sampleReflection } from '@/lib/schemas';
+import { generateReflection } from '@/lib/llm';
 
 export async function POST(request: Request) {
   try {
-    // Check authentication
-    const { data: { session } } = await supabase.auth.getSession();
+    // Check authentication using server client
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
 
-    if (!session?.user) {
+    if (!user) {
       return NextResponse.json(
         { error: 'Unauthorized' },
         { status: 401 }
@@ -41,16 +42,44 @@ export async function POST(request: Request) {
       );
     }
 
-    // For now, return the hardcoded sample reflection
-    // This will be replaced with actual LLM call in Step 15
+    // Generate reflection using OpenAI
+    const reflection = await generateReflection(entry_text);
+
+    // Save journal entry to database
+    const { data: entry, error: entryError } = await supabaseAdmin
+      .from('journal_entries')
+      .insert({ user_id: user.id, entry_text })
+      .select('id')
+      .single();
+
+    if (entryError) {
+      console.error('Error saving journal entry:', entryError);
+      throw new Error('Failed to save journal entry');
+    }
+
+    // Save reflection output to database
+    const { error: outputError } = await supabaseAdmin
+      .from('journal_outputs')
+      .insert({
+        entry_id: entry.id,
+        user_id: user.id,
+        output: reflection
+      });
+
+    if (outputError) {
+      console.error('Error saving reflection output:', outputError);
+      throw new Error('Failed to save reflection');
+    }
+
     return NextResponse.json({
-      reflection: sampleReflection
+      entry_id: entry.id,
+      reflection
     });
 
   } catch (error) {
     console.error('API error:', error);
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: 'Unable to generate reflection. Please try again.' },
       { status: 500 }
     );
   }
