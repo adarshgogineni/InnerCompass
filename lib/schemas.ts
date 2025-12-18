@@ -33,7 +33,7 @@ export const InteractiveReflectionSchema = z.object({
   reframe: z.string().max(200),
   mantra: z.string().max(100).optional(),
   safety_note: z.string().optional(),
-  prompt_responses: z.record(z.string()).default({}),
+  prompt_responses: z.record(z.string(), z.string()).default({}),
 });
 
 export type InteractiveReflection = z.infer<typeof InteractiveReflectionSchema>;
