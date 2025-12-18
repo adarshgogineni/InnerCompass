@@ -47,23 +47,23 @@
 - **Phase:** Project Setup & Scaffolding
 - **Goal:** Create a new Next.js project using the App Router with TypeScript and verify it runs locally.
 - **Prerequisites:**
-  - [ ] Node.js v18+ installed
-  - [ ] npm or pnpm available
+  - [x] Node.js v18+ installed
+  - [x] npm or pnpm available
 - **What to do:**
-  - [ ] Run `npx create-next-app@latest innercompass-mini --typescript --tailwind --app --no-src`
-  - [ ] Navigate into the project directory: `cd innercompass-mini`
-  - [ ] Start the dev server: `npm run dev`
-  - [ ] Open `http://localhost:3000` and verify the default Next.js page loads
-  - [ ] Delete the default page content in `app/page.tsx` and replace with a simple "InnerCompass Mini" heading
+  - [x] Run `npx create-next-app@latest innercompass-mini --typescript --tailwind --app --no-src`
+  - [x] Navigate into the project directory: `cd innercompass-mini`
+  - [x] Start the dev server: `npm run dev`
+  - [x] Open `http://localhost:3000` and verify the default Next.js page loads
+  - [x] Delete the default page content in `app/page.tsx` and replace with a simple "InnerCompass Mini" heading
 - **Implementation hints:**
   - Choose "Yes" for ESLint when prompted
   - Choose "No" for `src/` directory (we'll use `app/` at root for App Router)
   - Choose "Yes" for Tailwind CSS
   - The project structure should have: `app/`, `public/`, `package.json`, `tsconfig.json`, `tailwind.config.ts`
 - **Done when:**
-  - [ ] Dev server runs without errors
-  - [ ] `http://localhost:3000` shows your custom heading
-  - [ ] TypeScript compilation works (`npm run build` succeeds)
+  - [x] Dev server runs without errors
+  - [x] `http://localhost:3000` shows your custom heading
+  - [x] TypeScript compilation works (`npm run build` succeeds)
 
 ---
 
@@ -72,24 +72,24 @@
 - **Phase:** Project Setup & Scaffolding
 - **Goal:** Install shadcn/ui CLI and initialize the component library with a basic configuration.
 - **Prerequisites:**
-  - [ ] Step 1 completed
+  - [x] Step 1 completed
 - **What to do:**
-  - [ ] Run `npx shadcn@latest init`
-  - [ ] Choose the following options:
+  - [x] Run `npx shadcn@latest init`
+  - [x] Choose the following options:
     - Style: "New York" (or "Default" based on preference)
     - Base color: "Slate"
     - CSS variables: "Yes"
-  - [ ] Verify that `components.json` was created at the root
-  - [ ] Install initial components you'll need: `npx shadcn@latest add button textarea card badge accordion skeleton`
-  - [ ] Check that `components/ui/` folder exists with installed components
+  - [x] Verify that `components.json` was created at the root
+  - [x] Install initial components you'll need: `npx shadcn@latest add button textarea card badge accordion skeleton`
+  - [x] Check that `components/ui/` folder exists with installed components
 - **Implementation hints:**
   - shadcn/ui creates a `components/ui/` folder and updates `tailwind.config.ts`
   - The `components.json` file defines paths and style preferences
   - Each component is copied into your project (not installed via npm), giving you full control
 - **Done when:**
-  - [ ] `components.json` exists
-  - [ ] `components/ui/button.tsx`, `textarea.tsx`, `card.tsx`, etc. exist
-  - [ ] No errors when running `npm run dev`
+  - [x] `components.json` exists
+  - [x] `components/ui/button.tsx`, `textarea.tsx`, `card.tsx`, etc. exist
+  - [x] No errors when running `npm run dev`
 
 ---
 
@@ -98,28 +98,28 @@
 - **Phase:** Project Setup & Scaffolding
 - **Goal:** Organize the app into logical route groups for authenticated and unauthenticated sections.
 - **Prerequisites:**
-  - [ ] Step 2 completed
+  - [x] Step 2 completed
 - **What to do:**
-  - [ ] Create route groups:
+  - [x] Create route groups:
     - `app/(auth)/login/page.tsx` (login page)
     - `app/(auth)/signup/page.tsx` (signup page)
     - `app/(app)/new/page.tsx` (new journal entry, protected)
     - `app/(app)/result/[id]/page.tsx` (reflection result, protected)
     - `app/(app)/history/page.tsx` (optional history page, protected)
-  - [ ] Create shared layout files:
+  - [x] Create shared layout files:
     - `app/(auth)/layout.tsx` (minimal layout for auth pages)
     - `app/(app)/layout.tsx` (layout for authenticated app pages, will include auth check later)
-  - [ ] Create `lib/` folder for utilities: `lib/supabaseClient.ts`, `lib/env.ts`, `lib/schemas.ts`
-  - [ ] Add placeholder content to each page (e.g., `export default function LoginPage() { return <h1>Login</h1> }`)
+  - [x] Create `lib/` folder for utilities: `lib/supabaseClient.ts`, `lib/env.ts`, `lib/schemas.ts`
+  - [x] Add placeholder content to each page (e.g., `export default function LoginPage() { return <h1>Login</h1> }`)
 - **Implementation hints:**
   - Route groups (folders with parentheses) don't affect URL structure but help organize layouts
   - `app/(auth)/login/page.tsx` maps to `/login`
   - `app/(app)/new/page.tsx` maps to `/new`
   - Keep `lib/` at the root for shared business logic
 - **Done when:**
-  - [ ] All route folders exist with placeholder pages
-  - [ ] Navigating to `/login`, `/signup`, `/new` shows placeholder content
-  - [ ] `lib/` folder created with empty files for now
+  - [x] All route folders exist with placeholder pages
+  - [x] Navigating to `/login`, `/signup`, `/new` shows placeholder content
+  - [x] `lib/` folder created with empty files for now
 
 ---
 
@@ -128,30 +128,30 @@
 - **Phase:** Project Setup & Scaffolding
 - **Goal:** Set up `.env.local` with placeholders for required environment variables and create a utility to validate them.
 - **Prerequisites:**
-  - [ ] Step 3 completed
+  - [x] Step 3 completed
 - **What to do:**
-  - [ ] Create `.env.local` at the root with the following keys (leave values empty for now):
+  - [x] Create `.env.local` at the root with the following keys (leave values empty for now):
     ```
     NEXT_PUBLIC_SUPABASE_URL=
     NEXT_PUBLIC_SUPABASE_ANON_KEY=
     SUPABASE_SERVICE_ROLE_KEY=
     OPENAI_API_KEY=
     ```
-  - [ ] Add `.env.local` to `.gitignore` (should already be there by default)
-  - [ ] Create `lib/env.ts` to validate environment variables:
+  - [x] Add `.env.local` to `.gitignore` (should already be there by default)
+  - [x] Create `lib/env.ts` to validate environment variables:
     ```typescript
     // Export functions like getSupabaseUrl(), getOpenAIKey()
     // Throw errors if required vars are missing
     ```
-  - [ ] Document required env vars in a `README.md` section
+  - [x] Document required env vars in a `README.md` section
 - **Implementation hints:**
   - `NEXT_PUBLIC_*` vars are exposed to the browser; others are server-only
   - You can use Zod to validate env vars in `lib/env.ts`, but simple string checks are fine for MVP
   - Example: `if (!process.env.OPENAI_API_KEY) throw new Error('Missing OPENAI_API_KEY')`
 - **Done when:**
-  - [ ] `.env.local` exists with all keys listed
-  - [ ] Running the app without values shows a clear error from `lib/env.ts`
-  - [ ] README documents what each env var is for
+  - [x] `.env.local` exists with all keys listed
+  - [x] Running the app without values shows a clear error from `lib/env.ts`
+  - [x] README documents what each env var is for
 
 ---
 
