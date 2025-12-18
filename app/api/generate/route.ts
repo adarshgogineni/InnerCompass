@@ -3,6 +3,11 @@ import { createClient } from '@/lib/supabaseServer';
 import { supabaseAdmin } from '@/lib/supabaseAdmin';
 import { generateReflection } from '@/lib/llm';
 
+// Simple in-memory rate limiter
+// Maps user_id -> timestamp of last request
+const rateLimitMap = new Map<string, number>();
+const RATE_LIMIT_WINDOW_MS = 60000; // 60 seconds
+
 export async function POST(request: Request) {
   try {
     // Check authentication using server client
@@ -15,6 +20,21 @@ export async function POST(request: Request) {
         { status: 401 }
       );
     }
+
+    // Check rate limit
+    const now = Date.now();
+    const lastRequest = rateLimitMap.get(user.id);
+
+    if (lastRequest && now - lastRequest < RATE_LIMIT_WINDOW_MS) {
+      const secondsRemaining = Math.ceil((RATE_LIMIT_WINDOW_MS - (now - lastRequest)) / 1000);
+      return NextResponse.json(
+        { error: `Please wait ${secondsRemaining} seconds before submitting another entry` },
+        { status: 429 }
+      );
+    }
+
+    // Update rate limit timestamp
+    rateLimitMap.set(user.id, now);
 
     // Parse request body
     const body = await request.json();

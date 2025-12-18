@@ -16,6 +16,44 @@ export const ReflectionSchema = z.object({
 
 export type Reflection = z.infer<typeof ReflectionSchema>;
 
+// Extended schema for interactive reflections with user edits and completions
+export const InteractiveReflectionSchema = z.object({
+  mood_tags: z.array(z.string()).max(10),
+  key_themes: z.array(z.string()).max(10),
+  reflection_prompts: z.array(z.string()).min(2).max(5),
+  micro_action: z.object({
+    title: z.string(),
+    duration_minutes: z.number().min(1).max(60),
+    steps: z.array(z.object({
+      text: z.string(),
+      completed: z.boolean().default(false),
+      notes: z.string().default(''),
+    })).min(1).max(5),
+  }),
+  reframe: z.string().max(200),
+  mantra: z.string().max(100).optional(),
+  safety_note: z.string().optional(),
+  prompt_responses: z.record(z.string()).default({}),
+});
+
+export type InteractiveReflection = z.infer<typeof InteractiveReflectionSchema>;
+
+// Helper to convert legacy Reflection to InteractiveReflection format
+export function toInteractiveReflection(reflection: Reflection): InteractiveReflection {
+  return {
+    ...reflection,
+    micro_action: {
+      ...reflection.micro_action,
+      steps: reflection.micro_action.steps.map(text => ({
+        text,
+        completed: false,
+        notes: '',
+      })),
+    },
+    prompt_responses: {},
+  };
+}
+
 // Sample valid reflection for testing
 export const sampleReflection: Reflection = {
   mood_tags: ['anxious', 'hopeful', 'determined'],

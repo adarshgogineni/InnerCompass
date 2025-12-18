@@ -5,9 +5,11 @@ import { useRouter } from "next/navigation";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { useToast } from "@/hooks/use-toast";
 
 export default function NewEntryPage() {
   const router = useRouter();
+  const { toast } = useToast();
   const [entryText, setEntryText] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -43,6 +45,11 @@ export default function NewEntryPage() {
       const data = await response.json();
 
       if (!response.ok) {
+        if (response.status === 429) {
+          setError(data.error); // Rate limit message already user-friendly
+          setLoading(false);
+          return;
+        }
         throw new Error(data.error || "Failed to generate reflection");
       }
 
@@ -53,7 +60,13 @@ export default function NewEntryPage() {
 
     } catch (err) {
       console.error("Error:", err);
-      setError(err instanceof Error ? err.message : "Failed to generate reflection");
+      const errorMessage = err instanceof Error ? err.message : "Failed to generate reflection";
+      setError(errorMessage);
+      toast({
+        title: "Error",
+        description: errorMessage,
+        variant: "destructive",
+      });
     } finally {
       setLoading(false);
     }
