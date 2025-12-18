@@ -386,7 +386,7 @@ export default function InteractiveReflection({ entryId, initialReflection }: In
                     </div>
                     <Textarea
                       placeholder="Write your thoughts here..."
-                      value={reflection.prompt_responses[index] || ""}
+                      value={reflection.prompt_responses?.[index] || ""}
                       onChange={(e) => updatePromptResponse(index, e.target.value)}
                       className="min-h-[120px]"
                     />
