@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabaseServer";
 import { Button } from "@/components/ui/button";
 import type { Reflection } from "@/lib/schemas";
 import InteractiveReflection from "./InteractiveReflection";
+import { ArrowLeft } from "lucide-react";
 
 export default async function ResultPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -27,8 +28,14 @@ export default async function ResultPage({ params }: { params: Promise<{ id: str
       <InteractiveReflection entryId={id} initialReflection={reflection} />
 
       {/* Actions */}
-      <div className="flex justify-center pb-8">
-        <Button asChild variant="outline">
+      <div className="flex justify-center gap-4 pb-8">
+        <Button asChild variant="outline" className="rounded-xl gap-2">
+          <Link href="/history">
+            <ArrowLeft className="h-4 w-4" />
+            Back to History
+          </Link>
+        </Button>
+        <Button asChild className="rounded-xl gap-2">
           <Link href="/new">Write Another Entry</Link>
         </Button>
       </div>

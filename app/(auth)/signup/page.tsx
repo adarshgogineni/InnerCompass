@@ -36,32 +36,35 @@ export default function SignupPage() {
   };
 
   return (
-    <Card className="w-full max-w-md">
-      <CardHeader>
-        <CardTitle>Sign Up</CardTitle>
-        <CardDescription>Create your InnerCompass account</CardDescription>
+    <Card className="zen-card">
+      <CardHeader className="space-y-3">
+        <CardTitle className="text-2xl font-display">Begin your journey</CardTitle>
+        <CardDescription className="text-base">
+          Create an account to start your mindfulness practice
+        </CardDescription>
       </CardHeader>
       <form onSubmit={handleSignup}>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-5">
           {error && (
-            <div className="bg-destructive/10 text-destructive px-4 py-2 rounded-md text-sm">
+            <div className="bg-destructive/10 text-destructive px-4 py-3 rounded-xl text-sm border border-destructive/20">
               {error}
             </div>
           )}
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email" className="text-sm font-medium">Email</Label>
             <Input
               id="email"
               type="email"
-              placeholder="you@example.com"
+              placeholder="your@email.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
               disabled={loading}
+              className="rounded-xl h-11 px-4"
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password" className="text-sm font-medium">Password</Label>
             <Input
               id="password"
               type="password"
@@ -71,19 +74,29 @@ export default function SignupPage() {
               required
               minLength={6}
               disabled={loading}
+              className="rounded-xl h-11 px-4"
             />
           </div>
         </CardContent>
-        <CardFooter className="flex flex-col space-y-4">
-          <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? "Creating account..." : "Sign Up"}
+        <CardFooter className="flex flex-col space-y-5 pt-2">
+          <Button
+            type="submit"
+            className="w-full h-11 rounded-xl font-medium hover:scale-[1.02] transition-all"
+            disabled={loading}
+          >
+            {loading ? "Creating account..." : "Create account"}
           </Button>
-          <p className="text-sm text-muted-foreground text-center">
-            Already have an account?{" "}
-            <Link href="/login" className="text-primary hover:underline">
-              Login
-            </Link>
-          </p>
+          <div className="space-y-3 text-center w-full">
+            <p className="text-sm text-muted-foreground">
+              Already have an account?{" "}
+              <Link href="/login" className="text-primary font-medium hover:underline">
+                Sign in
+              </Link>
+            </p>
+            <p className="text-xs text-muted-foreground/80 italic">
+              Private by default. Stored only in your account.
+            </p>
+          </div>
         </CardFooter>
       </form>
     </Card>

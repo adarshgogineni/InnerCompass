@@ -3,7 +3,8 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "InnerCompass Mini",
-  description: "A lightweight journaling app for quick reflections",
+  description: "Your personal wellness companion for mindful reflection and clarity in just 60 seconds",
+  themeColor: "#f5f2ed", // warm sand background
 };
 
 export default function RootLayout({
@@ -13,7 +14,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body className="font-sans">{children}</body>
     </html>
   );
 }
